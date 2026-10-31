@@ -292,9 +292,22 @@ header nav .nav-sections ul > li > ul > li {
 header nav .nav-tools {
   grid-area: tools;
   color: var(--nav-text-color);
-  font-size: var(--body-font-size-s);
+  font-size: var(--body-font-size-xs);
 }
  
 header nav .nav-tools a:hover {
   color: var(--accent-color);
+}
+
+@media (width >= 900px) {
+  header nav .nav-tools {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    white-space: nowrap;
+  }
+
+  header nav .nav-tools p {
+    margin: 0;
+  }
 }
