@@ -41,8 +41,13 @@
   );
 }
 
-/* Everything except the background picture sits above the scrim */
-.hero > *:not(picture) {
+/* Target the actual text elements directly rather than their wrapping
+   divs — the hero's image sits in its own wrapping div too (one row of
+   the Hero table), and giving that div "position: relative" collapses
+   the absolutely-positioned image inside it to zero height. */
+.hero h1,
+.hero p,
+.hero a {
   position: relative;
   z-index: 1;
 }
