@@ -15,7 +15,7 @@
   border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 20px;
-  background: var(--link-color);
+  background: var(--light-color);
 }
 
 .demo-cart-product-list,
