@@ -36,3 +36,48 @@
   color: #1a7f37;
   font-weight: 600;
 }
+
+.demo-register-email-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.demo-register-email-row input {
+  flex: 1;
+}
+
+.demo-register-fresh-email {
+  white-space: nowrap;
+  font-size: var(--body-font-size-xs);
+  padding: 0.5em 0.8em;
+}
+
+.demo-register-clear {
+  margin-top: 16px;
+  background: none;
+  border: none;
+  color: var(--body-text-color);
+  text-decoration: underline;
+  font-size: var(--body-font-size-xs);
+  cursor: pointer;
+  padding: 0;
+}
+
+.demo-register-clear:hover {
+  color: var(--accent-color);
+}
+
+/* Register button: navy instead of the site-wide orange accent,
+   scoped to this form only so other "button primary" elements
+   elsewhere on the site are unaffected. */
+.demo-register-form button.primary {
+  background-color: var(--dark-color);
+  border-color: var(--dark-color);
+}
+
+.demo-register-form button.primary:hover,
+.demo-register-form button.primary:focus-visible {
+  background-color: var(--nav-background-dark, var(--dark-color));
+  border-color: var(--nav-background-dark, var(--dark-color));
+}
