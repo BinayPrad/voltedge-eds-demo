@@ -76,3 +76,16 @@
 .demo-cart-status.error {
   color: #c9430f;
 }
+
+/* Place Order button: navy instead of the site-wide orange accent,
+   matching the Register button. Scoped to this block only. */
+.demo-cart-actions button.primary {
+  background-color: var(--dark-color);
+  border-color: var(--dark-color);
+}
+
+.demo-cart-actions button.primary:hover,
+.demo-cart-actions button.primary:focus-visible {
+  background-color: var(--nav-background-dark, var(--dark-color));
+  border-color: var(--nav-background-dark, var(--dark-color));
+}
