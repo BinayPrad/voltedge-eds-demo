@@ -300,7 +300,7 @@ header nav .nav-tools a:hover {
 }
 
 @media (width >= 900px) {
-  header nav .nav-tools {
+  header nav .nav-tools .default-content-wrapper {
     display: flex;
     align-items: center;
     gap: 16px;
