@@ -35,6 +35,16 @@
   gap: 12px;
 }
 
+.demo-cart-product-list li span {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.demo-cart-product-list li button {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
 .demo-cart-list li {
   font-size: var(--body-font-size-xs);
   border-bottom: 1px solid var(--border-color);
