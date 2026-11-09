@@ -81,3 +81,32 @@
   background-color: var(--nav-background-dark, var(--dark-color));
   border-color: var(--nav-background-dark, var(--dark-color));
 }
+
+/* Login section (returning customers) */
+.demo-register-login-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.demo-register-login-row select {
+  flex: 1;
+  min-width: 180px;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  padding: 0.5em 0.75em;
+  font: inherit;
+}
+
+.demo-register-hint {
+  font-size: var(--body-font-size-xs);
+  color: var(--body-text-color);
+  font-style: italic;
+}
+
+.demo-register-divider {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 20px 0;
+}
