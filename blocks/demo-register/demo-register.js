@@ -51,6 +51,14 @@ export default function decorate(block) {
   const existingIdentity = localStorage.getItem(IDENTITY_KEY);
   const activeIdentity = existingIdentity ? JSON.parse(existingIdentity) : null;
 
+  // Migration: anyone registered under the old version of this script (before
+  // the known-customers list existed) only ever had their identity stored in
+  // IDENTITY_KEY, never saved to CUSTOMERS_KEY. Back-fill them in now so they
+  // show up in the Login dropdown without needing to re-register.
+  if (activeIdentity && !getCustomers().some((c) => c.email === activeIdentity.email)) {
+    saveCustomer(activeIdentity);
+  }
+
   wrapper.innerHTML = `
     <div class="demo-register-login">
       <h3>Returning customer? Log in</h3>
