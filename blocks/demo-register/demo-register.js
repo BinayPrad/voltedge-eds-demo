@@ -29,6 +29,19 @@ function saveCustomer(identity) {
   localStorage.setItem(CUSTOMERS_KEY, JSON.stringify(customers));
 }
 
+function renderLoginSection(customers) {
+  return customers.length
+    ? `
+      <div class="demo-register-login-row">
+        <select class="demo-register-customer-select">
+          ${customers.map((c) => `<option value="${c.email}">${c.firstName} ${c.lastName} (${c.email})</option>`).join('')}
+        </select>
+        <button type="button" class="button secondary demo-register-login-btn">Log In</button>
+      </div>
+    `
+    : '<p class="demo-register-hint">No saved customers yet — register below to create one.</p>';
+}
+
 export default function decorate(block) {
   block.textContent = '';
 
@@ -37,21 +50,11 @@ export default function decorate(block) {
 
   const existingIdentity = localStorage.getItem(IDENTITY_KEY);
   const activeIdentity = existingIdentity ? JSON.parse(existingIdentity) : null;
-  const customers = getCustomers();
 
   wrapper.innerHTML = `
     <div class="demo-register-login">
       <h3>Returning customer? Log in</h3>
-      ${customers.length
-    ? `
-        <div class="demo-register-login-row">
-          <select class="demo-register-customer-select">
-            ${customers.map((c) => `<option value="${c.email}">${c.firstName} ${c.lastName} (${c.email})</option>`).join('')}
-          </select>
-          <button type="button" class="button secondary demo-register-login-btn">Log In</button>
-        </div>
-      `
-    : '<p class="demo-register-hint">No saved customers yet — register below to create one.</p>'}
+      <div class="demo-register-login-content">${renderLoginSection(getCustomers())}</div>
     </div>
 
     <hr class="demo-register-divider">
@@ -77,26 +80,32 @@ export default function decorate(block) {
 
   const status = wrapper.querySelector('.demo-register-status');
   const emailInput = wrapper.querySelector('input[name="email"]');
+  const loginContent = wrapper.querySelector('.demo-register-login-content');
 
   function showActive(id, verb = 'Registered') {
     status.textContent = `${verb} as ${id.firstName} ${id.lastName} (${id.email})`;
     status.className = 'demo-register-status success';
   }
 
-  if (activeIdentity) {
-    showActive(activeIdentity, 'Logged in');
+  function refreshLoginSection() {
+    loginContent.innerHTML = renderLoginSection(getCustomers());
+    const loginBtn = loginContent.querySelector('.demo-register-login-btn');
+    if (loginBtn) {
+      loginBtn.addEventListener('click', () => {
+        const select = loginContent.querySelector('.demo-register-customer-select');
+        const chosen = getCustomers().find((c) => c.email === select.value);
+        if (chosen) {
+          localStorage.setItem(IDENTITY_KEY, JSON.stringify(chosen));
+          showActive(chosen, 'Logged in');
+        }
+      });
+    }
   }
 
-  const loginBtn = wrapper.querySelector('.demo-register-login-btn');
-  if (loginBtn) {
-    loginBtn.addEventListener('click', () => {
-      const select = wrapper.querySelector('.demo-register-customer-select');
-      const chosen = customers.find((c) => c.email === select.value);
-      if (chosen) {
-        localStorage.setItem(IDENTITY_KEY, JSON.stringify(chosen));
-        showActive(chosen, 'Logged in');
-      }
-    });
+  refreshLoginSection();
+
+  if (activeIdentity) {
+    showActive(activeIdentity, 'Logged in');
   }
 
   wrapper.querySelector('.demo-register-fresh-email').addEventListener('click', () => {
@@ -115,6 +124,8 @@ export default function decorate(block) {
     localStorage.setItem(IDENTITY_KEY, JSON.stringify(newIdentity));
     saveCustomer(newIdentity);
     showActive(newIdentity, 'Registered');
+    refreshLoginSection(); // new customer now appears in the dropdown immediately
+    e.target.reset();
   });
 
   wrapper.querySelector('.demo-register-clear').addEventListener('click', () => {
